@@ -116,6 +116,7 @@ public class BallPistol : UdonSharpBehaviour
     private void OnOwnershipTransferred(VRC.SDKBase.VRCPlayerApi player)
     {
         Debug.Log(curName + " OnOwnershipTransferred");
+        //player.GetBonePosition(HumanBodyBones.RightHand)
         //localPlayer = player;
         //player.GetPickupInHand(VRC_Pickup.PickupHand.Left).
         //player.PlayHapticEventInHand(VRC_Pickup.PickupHand.Left, 1.0f, 1.0f, 1.0f);
