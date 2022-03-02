@@ -192,5 +192,5 @@ QualitySettings:
     excludedTargetPlatforms:
     - Standalone
   m_PerPlatformDefaultQuality:
-    Android: 1
+    Android: 3
     Standalone: 3
