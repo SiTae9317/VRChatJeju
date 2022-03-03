@@ -1,0 +1,4 @@
+git lfs track "*.log"
+git add .
+git commit -m "lfs upload"
+git push
