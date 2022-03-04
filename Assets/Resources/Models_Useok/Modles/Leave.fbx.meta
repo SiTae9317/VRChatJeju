@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Color_Platte
+    second: {fileID: 2100000, guid: e5098af9ae6cf2e48954943e33c2b745, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Leave
     second: {fileID: 2100000, guid: ba260f49f10b6c945ac690dbccf03f62, type: 2}
   materials:
