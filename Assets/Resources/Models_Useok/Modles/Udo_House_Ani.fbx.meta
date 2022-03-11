@@ -5,13 +5,13 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Take 001
+    second: Udo_House_Fall_Take
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_Color_Platte
-    second: {fileID: 2100000, guid: e5098af9ae6cf2e48954943e33c2b745, type: 2}
+    second: {fileID: 2100000, guid: 43e99fb1d14b382488f9dee787348c29, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -31,7 +31,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -40,7 +40,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: Udo_House_Fall_Take
       takeName: Take 001
       internalID: 0
       firstFrame: 0
