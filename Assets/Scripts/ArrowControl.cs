@@ -53,6 +53,7 @@ public class ArrowControl : UdonSharpBehaviour
     public void fireArrow(float velocity)
     {
         Vector3 arrowVec = gameObject.transform.forward;
+        gameObject.GetComponent<Collider>().enabled = true;
         Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
         rigid.isKinematic = false;
         rigid.angularVelocity = arrowVec * velocity;
