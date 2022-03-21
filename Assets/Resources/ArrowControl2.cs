@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowControl : MonoBehaviour
+public class ArrowControl2 : MonoBehaviour
 {
     private bool isFire = false;
     private bool isGround = false;
@@ -11,32 +11,7 @@ public class ArrowControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Mesh mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
-        
-
-        Vector2[] uvData = mesh.uv;
-        MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
-        Vector4 lightmapData = mr.lightmapScaleOffset;
-        
-        Debug.Log(mr.lightmapIndex);
-
-        Debug.Log(lightmapData.x + " " + lightmapData.y + " " + lightmapData.z + " " + lightmapData.w);
-
-        Debug.Log("uv ============================");
-        testLog(mesh.uv);
-
-        Debug.Log("uv2 ============================");
-        testLog(mesh.uv2);
-
-        Debug.Log("uv3 ============================");
-        testLog(mesh.uv3);
-
-        Debug.Log("uv4 ============================");
-        testLog(mesh.uv4);
-
-        Debug.Log("uv5 ============================");
-        testLog(mesh.uv5);
-
+        ;
     }
 
     void testLog(Vector2[] uvData)

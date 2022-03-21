@@ -11,7 +11,19 @@ public class BowControl : UdonSharpBehaviour
     public VRC_Pickup currentPickup;
     //public GameObject handPointObj;
 
+    public GameObject arrowPrefab;
     public GameObject wirePointObj;
+    public GameObject wireBaseObj;
+
+    public Transform leftPoint;
+    public Transform rightPoint;
+
+    public float bowPow = 30.0f;
+
+    public string pickupMessage = "";
+    public string pullingMessage = "";
+
+    private GameObject insArrow;
 
     private Vector3 wireOriPoint;
     private Vector3 beforePosition;
@@ -29,9 +41,11 @@ public class BowControl : UdonSharpBehaviour
 
     private bool shotHaptic = false;
 
+    private Vector3 localHandPos;
+
     void Start()
     {
-        wireOriPoint = wirePointObj.transform.localPosition;
+        //wireOriPoint = wirePointObj.transform.localPosition;
     }
 
     private void Update()
@@ -46,20 +60,20 @@ public class BowControl : UdonSharpBehaviour
             Vector3 wirePoint = wirePointObj.transform.position;
 
             float pointDis = Vector3.Distance(wirePoint, handPos);
-            if (pointDis < 0.1f)
-            {
-                lm.logStr = "Grip";
-                minimumPoint = true;
-            }
-            else
-            {
-                lm.logStr = "";
-                minimumPoint = false;
-            }
 
             if (arrowDrag)
             {
-                wirePointObj.transform.position = handPos;
+                localHandPos = handPos;
+
+                if (arrowHandType == 1)
+                {
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionLeftHand");
+                }
+                else if (arrowHandType == 2)
+                {
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRightHand");
+                }
+                //wirePointObj.transform.position = handPos;
 
                 saveTime += Time.deltaTime;
 
@@ -67,9 +81,11 @@ public class BowControl : UdonSharpBehaviour
                 {
                     saveTime = 0.0f;
 
-                    float duration = Vector3.Distance(beforePosition, handPos);
+                    Vector3 curHandNormal = wireBaseObj.transform.position - handPos;
 
-                    if (duration > 0.0f)
+                    float duration = Vector3.Distance(beforePosition, curHandNormal);
+
+                    if (duration > 0.01f)
                     {
                         if (arrowHandType == 1)
                         {
@@ -80,13 +96,47 @@ public class BowControl : UdonSharpBehaviour
                             Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, duration, 1.00f, pointDis);
                         }
 
-                        beforePosition = handPos;
+                        beforePosition = curHandNormal;
                     }
                 }
             }
             else
             {
-                wirePointObj.transform.localPosition = wireOriPoint;
+                if (pointDis < 0.1f)
+                {
+                    if(!minimumPoint)
+                    {
+                        if (arrowHandType == 1)
+                        {
+                            Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Left, 0.1f, 1.00f, 1.00f);
+                        }
+                        else if (arrowHandType == 2)
+                        {
+                            Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 1.00f, 1.00f);
+                        }
+                    }
+                    //if (pickupMessage == "")
+                    //{
+                    //    lm.logStr = "Use button";
+                    //}
+                    //else
+                    //{
+                    lm.logStr = pullingMessage;
+                    //}
+                    minimumPoint = true;
+                }
+                else
+                {
+                    //if(pickupMessage == "")
+                    //{
+                    //    lm.logStr = "Hold the bowstring\nwith the use button";
+                    //}
+                    //else
+                    //{
+                    lm.logStr = pickupMessage;
+                    //}
+                    minimumPoint = false;
+                }
             }
 
             if(shotHaptic)
@@ -98,6 +148,21 @@ public class BowControl : UdonSharpBehaviour
             }
         }
     }
+
+    public void OnWirePositionLeftHand()
+    {
+        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+    }
+
+    public void OnWirePositionRightHand()
+    {
+        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+    }
+
+    //public void OnWirePositionRelease()
+    //{
+    //    wirePointObj.transform.localPosition = wireOriPoint;
+    //}
 
     private void settingStatus(bool flag, int type)
     {
@@ -142,6 +207,22 @@ public class BowControl : UdonSharpBehaviour
             handPos = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
         }
         else if (arrowHandType == 2)
+        {
+            handPos = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        }
+
+        return handPos;
+    }
+
+    Vector3 getHumanAnotherBoneIndex()
+    {
+        Vector3 handPos = Vector3.zero;
+
+        if (arrowHandType == 2)
+        {
+            handPos = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        }
+        else if (arrowHandType == 1)
         {
             handPos = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
         }
@@ -205,7 +286,8 @@ public class BowControl : UdonSharpBehaviour
                     if (arrowHandType == 1)
                     {
                         arrowDrag = true;
-                        beforePosition = getHumanBoneIndex();
+                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowLeftInstance");
+                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
                         saveTime = 0.0f;
                     }
                 }
@@ -216,6 +298,8 @@ public class BowControl : UdonSharpBehaviour
                 {
                     arrowDrag = false;
                     saveTime = 0.0f;
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                    //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
                     shotHaptic = true;
                 }
             }
@@ -231,7 +315,8 @@ public class BowControl : UdonSharpBehaviour
                     if (arrowHandType == 2)
                     {
                         arrowDrag = true;
-                        beforePosition = getHumanBoneIndex();
+                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowRightInstance");
+                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
                         saveTime = 0.0f;
                     }
                 }
@@ -242,10 +327,35 @@ public class BowControl : UdonSharpBehaviour
                 {
                     arrowDrag = false;
                     saveTime = 0.0f;
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                    //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
                     shotHaptic = true;
                 }
             }
         }
+    }
+
+    public void OnArrowLeftInstance()
+    {
+        insArrow = VRCInstantiate(arrowPrefab);
+        insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
+        insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+    }
+
+    public void OnArrowRightInstance()
+    {
+        insArrow = VRCInstantiate(arrowPrefab);
+        insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
+        insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+    }
+
+    public void OnArrowFire()
+    {
+        Vector3 disVec1 = wirePointObj.transform.position;
+        wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+        Vector3 disVec2 = wirePointObj.transform.position;
+
+        insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
     }
 
     public void InputGrab(bool value, VRC.Udon.Common.UdonInputEventArgs args)
