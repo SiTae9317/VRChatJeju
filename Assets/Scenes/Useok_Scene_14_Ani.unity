@@ -2376,9 +2376,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 40609694}
-  - {fileID: 3379684826819721439}
-  - {fileID: 5102567958347585959}
   - {fileID: 767490062}
+  - {fileID: 5102567958347585959}
   - {fileID: 734221208}
   - {fileID: 335133961}
   - {fileID: 652901132}
@@ -2389,6 +2388,7 @@ Transform:
   - {fileID: 728274977}
   - {fileID: 195324396}
   - {fileID: 1201626610}
+  - {fileID: 8182875158857308932}
   - {fileID: 934399979}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -4441,7 +4441,7 @@ Transform:
   - {fileID: 1019173781}
   - {fileID: 316402444}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &195324397
 Animator:
@@ -7540,7 +7540,7 @@ Transform:
   - {fileID: 1937935317}
   - {fileID: 1705711103}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &336219301
 PrefabInstance:
@@ -7968,7 +7968,7 @@ Transform:
   - {fileID: 1444297093}
   - {fileID: 1041826782}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &368907598
 PrefabInstance:
@@ -8981,7 +8981,7 @@ Transform:
   - {fileID: 1219029276}
   - {fileID: 1284585918}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &421934583
 PrefabInstance:
@@ -11008,7 +11008,7 @@ Transform:
   - {fileID: 917932044}
   - {fileID: 1824456910}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &532166310 stripped
 Transform:
@@ -13155,7 +13155,7 @@ Transform:
   - {fileID: 10808267}
   - {fileID: 325213666}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &664097038
 PrefabInstance:
@@ -14396,7 +14396,7 @@ Transform:
   - {fileID: 1813149268}
   - {fileID: 1972988274}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &729360951
 PrefabInstance:
@@ -14637,7 +14637,7 @@ Transform:
   - {fileID: 692228284}
   - {fileID: 1664120291}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &734301541 stripped
 GameObject:
@@ -14972,7 +14972,7 @@ Transform:
   - {fileID: 1102155135}
   - {fileID: 2107604799}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &768200873
 PrefabInstance:
@@ -24204,7 +24204,7 @@ Transform:
   - {fileID: 1759256775}
   - {fileID: 873655693}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1209196491
 PrefabInstance:
@@ -37009,7 +37009,7 @@ Transform:
   - {fileID: 1048567959}
   - {fileID: 822091804}
   m_Father: {fileID: 78444744}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1571426549
 PrefabInstance:
@@ -49469,12 +49469,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3195155274186963008}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3379684826819721439 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6874855794854274012, guid: 846cf7b25e558f14fb15488a777b3279,
-    type: 3}
-  m_PrefabInstance: {fileID: 8182875158857308931}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3571578639502412264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49714,6 +49708,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 846cf7b25e558f14fb15488a777b3279, type: 3}
+--- !u!4 &8182875158857308932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 306344020580319480, guid: 846cf7b25e558f14fb15488a777b3279,
+    type: 3}
+  m_PrefabInstance: {fileID: 8182875158857308931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8239415599386201876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6021132946551981557, guid: 1455b5b74d30733419ab1efe2e3c282d,
