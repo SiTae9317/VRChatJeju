@@ -218,6 +218,17 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
+        minimumPoint = false;
+        arrowDrag = false;
+        shotHaptic = false;
+        saveTime = 0.0f;
+        isPickupStatus = false;
+
+        if (insArrow != null)
+        {
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+        }
+
         settingStatus(false, 0);
     }
 
