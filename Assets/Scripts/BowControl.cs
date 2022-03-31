@@ -19,6 +19,7 @@ public class BowControl : UdonSharpBehaviour
     public Transform rightPoint;
 
     public float bowPow = 30.0f;
+    public float resetTime = 10.0f;
 
     public string pickupMessage = "";
     public string pullingMessage = "";
@@ -35,6 +36,7 @@ public class BowControl : UdonSharpBehaviour
     private bool minimumPoint = false;
     private bool arrowDrag = false;
     private float saveTime = 0.0f;
+    private float resetSaveTime = 0.0f;
 
     private bool leftDown = false;
     private bool rightDown = false;
@@ -45,7 +47,7 @@ public class BowControl : UdonSharpBehaviour
     private Vector3 basePosition;
     private Quaternion baseRotation;
     private Vector3 baseScale;
-    private bool isRest = true;
+    private bool isReset = true;
 
     void Start()
     {
@@ -56,14 +58,15 @@ public class BowControl : UdonSharpBehaviour
         //wireOriPoint = wirePointObj.transform.localPosition;
     }
 
-    public void OnRestTransform()
+    public void OnResetTransform()
     {
-        if(!isPickupStatus && !isRest)
+        if(!isPickupStatus && !isReset && resetSaveTime > resetTime)
         {
+            resetSaveTime = 0.0f;
             gameObject.transform.position = basePosition;
             gameObject.transform.rotation = baseRotation;
             gameObject.transform.localScale = baseScale;
-            isRest = true;
+            isReset = true;
         }
     }
 
@@ -168,9 +171,13 @@ public class BowControl : UdonSharpBehaviour
         }
         else
         {
-            if(!isRest)
+            if(!isReset)
             {
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnRestTransform");
+                resetSaveTime += Time.deltaTime;
+                if(resetSaveTime > resetTime)
+                {
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetTransform");
+                }
             }
         }
     }
@@ -222,7 +229,8 @@ public class BowControl : UdonSharpBehaviour
     private void OnPickup()
     {
         settingStatus(true, (int)currentPickup.currentHand);
-        isRest = false;
+        isReset = false;
+        resetSaveTime = 0.0f;
     }
 
     Vector3 getHumanBoneIndex()
