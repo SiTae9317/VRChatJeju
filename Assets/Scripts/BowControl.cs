@@ -24,7 +24,7 @@ public class BowControl : UdonSharpBehaviour
     public string pickupMessage = "";
     public string pullingMessage = "";
 
-    private GameObject insArrow;
+    private GameObject insArrow = null;
 
     private Vector3 wireOriPoint;
     private Vector3 beforePosition;
@@ -228,6 +228,19 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
+        minimumPoint = false;
+        arrowDrag = false;
+        shotHaptic = false;
+        saveTime = 0.0f;
+        isPickupStatus = false;
+
+        if (insArrow != null)
+        {
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+        }
+        
+        //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
+
         settingStatus(true, (int)currentPickup.currentHand);
         isReset = false;
         resetSaveTime = 0.0f;
@@ -391,6 +404,7 @@ public class BowControl : UdonSharpBehaviour
         Vector3 disVec2 = wirePointObj.transform.position;
 
         insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+        insArrow = null;
     }
 
     public void InputGrab(bool value, VRC.Udon.Common.UdonInputEventArgs args)
