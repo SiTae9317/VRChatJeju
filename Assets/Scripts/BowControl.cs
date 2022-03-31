@@ -42,10 +42,25 @@ public class BowControl : UdonSharpBehaviour
     private bool shotHaptic = false;
 
     private Vector3 localHandPos;
+    private Vector3 basePosition;
+    private Quaternion baseRotation;
+    private Vector3 baseScale;
+    private bool isRest = true;
 
     void Start()
     {
+        basePosition = gameObject.transform.position;
+        baseRotation = gameObject.transform.rotation;
+        baseScale = gameObject.transform.localScale;
+
         //wireOriPoint = wirePointObj.transform.localPosition;
+    }
+
+    public void OnRestTransform()
+    {
+        gameObject.transform.position = basePosition;
+        gameObject.transform.rotation = baseRotation;
+        gameObject.transform.localScale = baseScale;
     }
 
     private void Update()
@@ -147,6 +162,14 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
+        else
+        {
+            if(!isRest)
+            {
+                isRest = true;
+                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnRestTransform");
+            }
+        }
     }
 
     public void OnWirePositionLeftHand()
@@ -196,6 +219,7 @@ public class BowControl : UdonSharpBehaviour
     private void OnPickup()
     {
         settingStatus(true, (int)currentPickup.currentHand);
+        isRest = false;
     }
 
     Vector3 getHumanBoneIndex()
