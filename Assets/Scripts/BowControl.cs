@@ -58,9 +58,13 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnRestTransform()
     {
-        gameObject.transform.position = basePosition;
-        gameObject.transform.rotation = baseRotation;
-        gameObject.transform.localScale = baseScale;
+        if(!isPickupStatus && !isRest)
+        {
+            gameObject.transform.position = basePosition;
+            gameObject.transform.rotation = baseRotation;
+            gameObject.transform.localScale = baseScale;
+            isRest = true;
+        }
     }
 
     private void Update()
@@ -166,7 +170,6 @@ public class BowControl : UdonSharpBehaviour
         {
             if(!isRest)
             {
-                isRest = true;
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnRestTransform");
             }
         }
