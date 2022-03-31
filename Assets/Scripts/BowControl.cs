@@ -173,6 +173,11 @@ public class BowControl : UdonSharpBehaviour
         {
             if(!isReset)
             {
+                if (insArrow != null)
+                {
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                }
+
                 resetSaveTime += Time.deltaTime;
                 if(resetSaveTime > resetTime)
                 {
