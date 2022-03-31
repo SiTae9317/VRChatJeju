@@ -175,7 +175,7 @@ public class BowControl : UdonSharpBehaviour
             {
                 if (insArrow != null)
                 {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");
                 }
 
                 resetSaveTime += Time.deltaTime;
@@ -184,6 +184,19 @@ public class BowControl : UdonSharpBehaviour
                     SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetTransform");
                 }
             }
+        }
+    }
+
+    public void OnReleaseAction()
+    {
+        if (!isReset && !isPickupStatus && insArrow != null)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
         }
     }
 
