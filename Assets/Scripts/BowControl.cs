@@ -48,9 +48,11 @@ public class BowControl : UdonSharpBehaviour
     private Quaternion baseRotation;
     private Vector3 baseScale;
     private bool isReset = true;
+    private int currentBowIndex = -1;
 
     void Start()
     {
+        currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
         basePosition = gameObject.transform.position;
         baseRotation = gameObject.transform.rotation;
         baseScale = gameObject.transform.localScale;
@@ -175,7 +177,7 @@ public class BowControl : UdonSharpBehaviour
             {
                 if (insArrow != null)
                 {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
                 }
 
                 resetSaveTime += Time.deltaTime;
@@ -183,22 +185,6 @@ public class BowControl : UdonSharpBehaviour
                 {
                     SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetTransform");
                 }
-            }
-        }
-    }
-
-    public void OnReleaseAction()
-    {
-        if(currentPickup.currentPlayer == null)
-        {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            if(insArrow != null)
-            {
-                insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-                insArrow = null;
             }
         }
     }
@@ -467,5 +453,174 @@ public class BowControl : UdonSharpBehaviour
     public void InputLookVertical(float value, VRC.Udon.Common.UdonInputEventArgs args)
     {
         ;
+    }
+
+    public void OnReleaseAction0()
+    {
+        if (currentBowIndex == 0)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction1()
+    {
+        if (currentBowIndex == 1)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction2()
+    {
+        if (currentBowIndex == 2)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction3()
+    {
+        if (currentBowIndex == 3)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction4()
+    {
+        if (currentBowIndex == 4)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction5()
+    {
+        if (currentBowIndex == 5)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction6()
+    {
+        if (currentBowIndex == 6)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction7()
+    {
+        if (currentBowIndex == 7)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction8()
+    {
+        if (currentBowIndex == 8)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction9()
+    {
+        if (currentBowIndex == 9)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction10()
+    {
+        if (currentBowIndex == 10)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction11()
+    {
+        if (currentBowIndex == 11)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
+    }
+
+    public void OnReleaseAction12()
+    {
+        if (currentBowIndex == 12)
+        {
+            Vector3 disVec1 = wirePointObj.transform.position;
+            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+            Vector3 disVec2 = wirePointObj.transform.position;
+
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
     }
 }
