@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -19,12 +18,11 @@ public class BowControl : UdonSharpBehaviour
     public Transform rightPoint;
 
     public float bowPow = 30.0f;
-    public float resetTime = 10.0f;
 
     public string pickupMessage = "";
     public string pullingMessage = "";
 
-    private GameObject insArrow = null;
+    private GameObject insArrow;
 
     private Vector3 wireOriPoint;
     private Vector3 beforePosition;
@@ -36,7 +34,6 @@ public class BowControl : UdonSharpBehaviour
     private bool minimumPoint = false;
     private bool arrowDrag = false;
     private float saveTime = 0.0f;
-    private float resetSaveTime = 0.0f;
 
     private bool leftDown = false;
     private bool rightDown = false;
@@ -44,40 +41,15 @@ public class BowControl : UdonSharpBehaviour
     private bool shotHaptic = false;
 
     private Vector3 localHandPos;
-    private Vector3 basePosition;
-    private Quaternion baseRotation;
-    private Vector3 baseScale;
-    private bool isReset = true;
-    private int currentBowIndex = -1;
-    VRCPlayerApi curlocalPlayer;
-
-    VRC_Pickup.PickupHand curHnad;
 
     void Start()
     {
-        currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
-        basePosition = gameObject.transform.position;
-        baseRotation = gameObject.transform.rotation;
-        baseScale = gameObject.transform.localScale;
-
         //wireOriPoint = wirePointObj.transform.localPosition;
-    }
-
-    public void OnResetTransform()
-    {
-        if(!isPickupStatus && !isReset && resetSaveTime > resetTime)
-        {
-            resetSaveTime = 0.0f;
-            gameObject.transform.position = basePosition;
-            gameObject.transform.rotation = baseRotation;
-            gameObject.transform.localScale = baseScale;
-            isReset = true;
-        }
     }
 
     private void Update()
     {
-        if(isPickupStatus)
+        if (isPickupStatus)
         {
             Vector3 handPos = getHumanBoneIndex();
 
@@ -131,7 +103,7 @@ public class BowControl : UdonSharpBehaviour
             {
                 if (pointDis < 0.1f)
                 {
-                    if(!minimumPoint)
+                    if (!minimumPoint)
                     {
                         if (arrowHandType == 1)
                         {
@@ -166,7 +138,7 @@ public class BowControl : UdonSharpBehaviour
                 }
             }
 
-            if(shotHaptic)
+            if (shotHaptic)
             {
                 shotHaptic = false;
 
@@ -174,38 +146,16 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
-        else
-        {
-            if(!isReset)
-            {
-                if (insArrow != null)
-                {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
-                }
-
-                resetSaveTime += Time.deltaTime;
-                if(resetSaveTime > resetTime)
-                {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetTransform");
-                }
-            }
-        }
     }
 
     public void OnWirePositionLeftHand()
     {
-        if(currentPickup.currentPlayer.IsValid())
-        {
-            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
-        }
+        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
     }
 
     public void OnWirePositionRightHand()
     {
-        if (currentPickup.currentPlayer.IsValid())
-        {
-            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
-        }
+        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
     }
 
     //public void OnWirePositionRelease()
@@ -218,15 +168,15 @@ public class BowControl : UdonSharpBehaviour
         isPickupStatus = flag;
         arrowHandType = bowHandType = type;
 
-        if(arrowHandType == 0)
+        if (arrowHandType == 0)
         {
             arrowHandType = 0;
         }
-        else if(arrowHandType == 1)
+        else if (arrowHandType == 1)
         {
             arrowHandType = 2;
         }
-        else if(arrowHandType == 2)
+        else if (arrowHandType == 2)
         {
             arrowHandType = 1;
         }
@@ -234,20 +184,6 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
-        curlocalPlayer.EnablePickups(true);
-        curlocalPlayer = null;
-        minimumPoint = false;
-        arrowDrag = false;
-        shotHaptic = false;
-        saveTime = 0.0f;
-        isPickupStatus = false;
-
-        //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
-        if (insArrow != null)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
-        }
-
         settingStatus(false, 0);
     }
 
@@ -258,24 +194,7 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
-        curlocalPlayer = currentPickup.currentPlayer;
-        curlocalPlayer.EnablePickups(false);
-        minimumPoint = false;
-        arrowDrag = false;
-        shotHaptic = false;
-        saveTime = 0.0f;
-        isPickupStatus = false;
-
-        if (insArrow != null)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
-        }
-        
-        //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
-
         settingStatus(true, (int)currentPickup.currentHand);
-        isReset = false;
-        resetSaveTime = 0.0f;
     }
 
     Vector3 getHumanBoneIndex()
@@ -359,9 +278,9 @@ public class BowControl : UdonSharpBehaviour
         {
             leftDown = !leftDown;
 
-            if(leftDown)
+            if (leftDown)
             {
-                if(minimumPoint)
+                if (minimumPoint)
                 {
                     if (arrowHandType == 1)
                     {
@@ -374,7 +293,7 @@ public class BowControl : UdonSharpBehaviour
             }
             else
             {
-                if(arrowDrag)
+                if (arrowDrag)
                 {
                     arrowDrag = false;
                     saveTime = 0.0f;
@@ -436,7 +355,6 @@ public class BowControl : UdonSharpBehaviour
         Vector3 disVec2 = wirePointObj.transform.position;
 
         insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-        insArrow = null;
     }
 
     public void InputGrab(bool value, VRC.Udon.Common.UdonInputEventArgs args)
@@ -467,128 +385,5 @@ public class BowControl : UdonSharpBehaviour
     public void InputLookVertical(float value, VRC.Udon.Common.UdonInputEventArgs args)
     {
         ;
-    }
-
-    public void OnReleaseAction0()
-    {
-        if (currentBowIndex == 0)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction1()
-    {
-        if (currentBowIndex == 1)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction2()
-    {
-        if (currentBowIndex == 2)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction3()
-    {
-        if (currentBowIndex == 3)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction4()
-    {
-        if (currentBowIndex == 4)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction5()
-    {
-        if (currentBowIndex == 5)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction6()
-    {
-        if (currentBowIndex == 6)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction7()
-    {
-        if (currentBowIndex == 7)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction8()
-    {
-        if (currentBowIndex == 8)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction9()
-    {
-        if (currentBowIndex == 9)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction10()
-    {
-        if (currentBowIndex == 10)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction11()
-    {
-        if (currentBowIndex == 11)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction12()
-    {
-        if (currentBowIndex == 12)
-        {
-            bowReset();
-        }
-    }
-
-    public void bowReset()
-    {
-        minimumPoint = false;
-        arrowDrag = false;
-        shotHaptic = false;
-        saveTime = 0.0f;
-        isPickupStatus = false;
-
-        Vector3 disVec1 = wirePointObj.transform.position;
-        wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-        Vector3 disVec2 = wirePointObj.transform.position;
-
-        if (insArrow != null)
-        {
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
-        }
     }
 }
