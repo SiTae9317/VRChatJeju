@@ -189,14 +189,17 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnReleaseAction()
     {
-        if (!isReset && !isPickupStatus && insArrow != null)
+        if(currentPickup.currentPlayer == null)
         {
             Vector3 disVec1 = wirePointObj.transform.position;
             wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
             Vector3 disVec2 = wirePointObj.transform.position;
 
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            if(insArrow != null)
+            {
+                insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+                insArrow = null;
+            }
         }
     }
 
