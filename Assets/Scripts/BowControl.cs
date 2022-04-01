@@ -42,6 +42,8 @@ public class BowControl : UdonSharpBehaviour
 
     private Vector3 localHandPos;
 
+    VRCPlayerApi curlocalPlayer;
+
     void Start()
     {
         //wireOriPoint = wirePointObj.transform.localPosition;
@@ -184,6 +186,11 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
+        if(curlocalPlayer != null)
+        {
+            curlocalPlayer.EnablePickups(true);
+            curlocalPlayer = null;
+        }
         settingStatus(false, 0);
     }
 
@@ -194,6 +201,9 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
+        curlocalPlayer = currentPickup.currentPlayer;
+        curlocalPlayer.EnablePickups(false);
+
         settingStatus(true, (int)currentPickup.currentHand);
     }
 
