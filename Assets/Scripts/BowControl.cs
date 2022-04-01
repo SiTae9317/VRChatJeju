@@ -503,6 +503,7 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
+            lm.logStr = "destroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
