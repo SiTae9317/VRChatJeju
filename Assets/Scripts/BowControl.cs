@@ -485,7 +485,7 @@ public class BowControl : UdonSharpBehaviour
     }
     public void bowReset()
     {
-        lm.logStr = "drop";
+        lm.logStr += "drop";
         isPickupStatus = false;
         bowHandType = 0;
         arrowHandType = 0;
