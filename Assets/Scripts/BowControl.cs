@@ -193,6 +193,8 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
+        gameObject.transform.position += Vector3.up * 10.0f;
+
         if(curlocalPlayer != null)
         {
             curlocalPlayer.EnablePickups(true);
