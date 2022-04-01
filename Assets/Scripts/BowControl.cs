@@ -41,11 +41,12 @@ public class BowControl : UdonSharpBehaviour
     private bool shotHaptic = false;
 
     private Vector3 localHandPos;
-
+    private int currentBowIndex = -1;
     VRCPlayerApi curlocalPlayer;
 
     void Start()
     {
+        currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
         //wireOriPoint = wirePointObj.transform.localPosition;
     }
 
@@ -152,12 +153,18 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionLeftHand()
     {
-        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        if (currentPickup.currentPlayer.IsValid())
+        {
+            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        }
     }
 
     public void OnWirePositionRightHand()
     {
-        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        if (currentPickup.currentPlayer.IsValid())
+        {
+            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        }
     }
 
     //public void OnWirePositionRelease()
@@ -191,6 +198,9 @@ public class BowControl : UdonSharpBehaviour
             curlocalPlayer.EnablePickups(true);
             curlocalPlayer = null;
         }
+
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
+
         settingStatus(false, 0);
     }
 
@@ -367,33 +377,119 @@ public class BowControl : UdonSharpBehaviour
         insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
     }
 
-    public void InputGrab(bool value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction0()
     {
-        ;
+        if (currentBowIndex == 0)
+        {
+            bowReset();
+        }
     }
 
-    public void InputDrop(bool value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction1()
     {
-        ;
+        if (currentBowIndex == 1)
+        {
+            bowReset();
+        }
     }
 
-    public void InputMoveHorizontal(float value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction2()
     {
-        ;
+        if (currentBowIndex == 2)
+        {
+            bowReset();
+        }
     }
 
-    public void InputMoveVertical(float value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction3()
     {
-        ;
+        if (currentBowIndex == 3)
+        {
+            bowReset();
+        }
     }
 
-    public void InputLookHorizontal(float value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction4()
     {
-        ;
+        if (currentBowIndex == 4)
+        {
+            bowReset();
+        }
     }
 
-    public void InputLookVertical(float value, VRC.Udon.Common.UdonInputEventArgs args)
+    public void OnReleaseAction5()
     {
-        ;
+        if (currentBowIndex == 5)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction6()
+    {
+        if (currentBowIndex == 6)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction7()
+    {
+        if (currentBowIndex == 7)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction8()
+    {
+        if (currentBowIndex == 8)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction9()
+    {
+        if (currentBowIndex == 9)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction10()
+    {
+        if (currentBowIndex == 10)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction11()
+    {
+        if (currentBowIndex == 11)
+        {
+            bowReset();
+        }
+    }
+
+    public void OnReleaseAction12()
+    {
+        if (currentBowIndex == 12)
+        {
+            bowReset();
+        }
+    }
+    public void bowReset()
+    {
+        Vector3 disVec1 = wirePointObj.transform.position;
+        wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+        Vector3 disVec2 = wirePointObj.transform.position;
+
+        if (insArrow != null)
+        {
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+            insArrow = null;
+        }
     }
 }
