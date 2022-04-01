@@ -191,12 +191,18 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionLeftHand()
     {
-        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        if(currentPickup.currentPlayer.IsValid())
+        {
+            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        }
     }
 
     public void OnWirePositionRightHand()
     {
-        insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        if (currentPickup.currentPlayer.IsValid())
+        {
+            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        }
     }
 
     //public void OnWirePositionRelease()
