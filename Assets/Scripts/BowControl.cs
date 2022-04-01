@@ -562,6 +562,12 @@ public class BowControl : UdonSharpBehaviour
 
     public void bowReset()
     {
+        minimumPoint = false;
+        arrowDrag = false;
+        shotHaptic = false;
+        saveTime = 0.0f;
+        isPickupStatus = false;
+
         Vector3 disVec1 = wirePointObj.transform.position;
         wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
         Vector3 disVec2 = wirePointObj.transform.position;
