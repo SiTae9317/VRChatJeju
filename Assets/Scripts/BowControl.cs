@@ -231,10 +231,11 @@ public class BowControl : UdonSharpBehaviour
         saveTime = 0.0f;
         isPickupStatus = false;
 
-        if (insArrow != null)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
-        }
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
+        //if (insArrow != null)
+        //{
+        //    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+        //}
 
         settingStatus(false, 0);
     }
