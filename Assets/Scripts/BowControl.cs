@@ -231,6 +231,7 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
+        currentPickup.currentPlayer.EnablePickups(true);
         minimumPoint = false;
         arrowDrag = false;
         shotHaptic = false;
@@ -253,6 +254,7 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
+        currentPickup.currentPlayer.EnablePickups(false);
         minimumPoint = false;
         arrowDrag = false;
         shotHaptic = false;
