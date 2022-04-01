@@ -193,8 +193,6 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
-        lm.logStr = "drop";
-
         if (curlocalPlayer != null)
         {
             curlocalPlayer.EnablePickups(true);
@@ -487,6 +485,7 @@ public class BowControl : UdonSharpBehaviour
     }
     public void bowReset()
     {
+        lm.logStr = "drop";
         isPickupStatus = false;
         bowHandType = 0;
         arrowHandType = 0;
