@@ -492,9 +492,9 @@ public class BowControl : UdonSharpBehaviour
         minimumPoint = false;
         arrowDrag = false;
         saveTime = 0.0f;
-    
-        //leftDown = false;
-        //rightDown = false;
+
+        leftDown = false;
+        rightDown = false;
         shotHaptic = false;
 
         Vector3 disVec1 = wirePointObj.transform.position;
