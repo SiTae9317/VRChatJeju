@@ -459,12 +459,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 0)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -472,12 +467,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 1)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -485,12 +475,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 2)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -498,12 +483,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 3)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -511,12 +491,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 4)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -524,12 +499,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 5)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -537,12 +507,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 6)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -550,12 +515,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 7)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -563,12 +523,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 8)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -576,12 +531,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 9)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -589,12 +539,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 10)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -602,12 +547,7 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 11)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
-
-            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
-            insArrow = null;
+            bowReset();
         }
     }
 
@@ -615,10 +555,18 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentBowIndex == 12)
         {
-            Vector3 disVec1 = wirePointObj.transform.position;
-            wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
-            Vector3 disVec2 = wirePointObj.transform.position;
+            bowReset();
+        }
+    }
 
+    public void bowReset()
+    {
+        Vector3 disVec1 = wirePointObj.transform.position;
+        wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+        Vector3 disVec2 = wirePointObj.transform.position;
+
+        if (insArrow != null)
+        {
             insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
