@@ -123,7 +123,7 @@ public class BowControl : UdonSharpBehaviour
                     //}
                     //else
                     //{
-                    lm.logStr = pullingMessage;
+                    //lm.logStr = pullingMessage;
                     //}
                     minimumPoint = true;
                 }
@@ -135,7 +135,7 @@ public class BowControl : UdonSharpBehaviour
                     //}
                     //else
                     //{
-                    lm.logStr = pickupMessage;
+                    //lm.logStr = pickupMessage;
                     //}
                     minimumPoint = false;
                 }
@@ -193,9 +193,9 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
-        gameObject.transform.position += Vector3.up * 10.0f;
+        lm.logStr = "drop";
 
-        if(curlocalPlayer != null)
+        if (curlocalPlayer != null)
         {
             curlocalPlayer.EnablePickups(true);
             curlocalPlayer = null;
