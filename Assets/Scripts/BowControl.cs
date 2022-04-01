@@ -485,7 +485,6 @@ public class BowControl : UdonSharpBehaviour
     }
     public void bowReset()
     {
-        lm.logStr += "drop";
         isPickupStatus = false;
         bowHandType = 0;
         arrowHandType = 0;
@@ -507,6 +506,10 @@ public class BowControl : UdonSharpBehaviour
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
+        }
+        else
+        {
+            lm.logStr = "arrow null";
         }
     }
 }
