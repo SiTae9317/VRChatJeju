@@ -46,6 +46,8 @@ public class BowControl : UdonSharpBehaviour
     VRCPlayerApi curTrackingPlayer = null;
     float playTime = 0.0f;
 
+    bool isTrackingMode = false;
+
     void Start()
     {
         currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
@@ -90,14 +92,14 @@ public class BowControl : UdonSharpBehaviour
             {
                 localHandPos = handPos;
 
-                if (arrowHandType == 1)
-                {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionLeftHand");
-                }
-                else if (arrowHandType == 2)
-                {
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRightHand");
-                }
+                //if (arrowHandType == 1)
+                //{
+                //    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionLeftHand");
+                //}
+                //else if (arrowHandType == 2)
+                //{
+                //    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRightHand");
+                //}
                 //wirePointObj.transform.position = handPos;
 
                 saveTime += Time.deltaTime;
@@ -172,29 +174,39 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
+
+        if(isTrackingMode)
+        {
+            if(arrowHandType == 1)
+            {
+                lm.logStr += "\r\nleft drag";
+                if (curTrackingPlayer != null)
+                {
+                    lm.logStr += "\r\nleft drag valid";
+                    insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+                }
+                lm.logStr += "\r\nleft drag valid end";
+            }
+            else if(arrowHandType == 2)
+            {
+                lm.logStr += "\r\nright drag";
+                if (curTrackingPlayer != null)
+                {
+                    lm.logStr += "\r\nright drag valid";
+                    insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+                }
+                lm.logStr += "\r\nright drag valid end";
+            }
+        }
     }
 
-    public void OnWirePositionLeftHand()
-    {
-        lm.logStr += "\r\nleft drag";
-        if (curTrackingPlayer != null)
-        {
-            lm.logStr += "\r\nleft drag valid";
-            insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
-        }
-        lm.logStr += "\r\nleft drag valid end";
-    }
+    //public void OnWirePositionLeftHand()
+    //{
+    //}
 
-    public void OnWirePositionRightHand()
-    {
-        lm.logStr += "\r\nright drag";
-        if (curTrackingPlayer != null)
-        {
-            lm.logStr += "\r\nright drag valid";
-            insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
-        }
-        lm.logStr += "\r\nright drag valid end";
-    }
+    //public void OnWirePositionRightHand()
+    //{
+    //}
 
     //public void OnWirePositionRelease()
     //{
@@ -401,6 +413,7 @@ public class BowControl : UdonSharpBehaviour
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
             insArrow.transform.position = leftPointPosition;
+            isTrackingMode = true;
         }
     }
 
@@ -414,11 +427,13 @@ public class BowControl : UdonSharpBehaviour
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
             insArrow.transform.position = rightPointPosition;
+            isTrackingMode = true;
         }
     }
 
     public void OnArrowFire()
     {
+        isTrackingMode = false;
         Vector3 disVec1 = wirePointObj.transform.position;
         wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
         Vector3 disVec2 = wirePointObj.transform.position;
@@ -534,6 +549,7 @@ public class BowControl : UdonSharpBehaviour
     }
     public void bowReset()
     {
+        isTrackingMode = false;
         isPickupStatus = false;
         bowHandType = 0;
         arrowHandType = 0;
