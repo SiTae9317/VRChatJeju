@@ -3,3 +3,4 @@
 LightingData.asset filter=lfs diff=lfs merge=lfs -text
 Useok_Scene_27_Combine.unity filter=lfs diff=lfs merge=lfs -text
 Useok_Scene_26_Combine.unity filter=lfs diff=lfs merge=lfs -text
+Useok_Scene_28_Combine.unity filter=lfs diff=lfs merge=lfs -text
