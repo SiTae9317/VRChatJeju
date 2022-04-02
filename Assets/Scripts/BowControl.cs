@@ -347,11 +347,6 @@ public class BowControl : UdonSharpBehaviour
             rightDown = !rightDown;
         }
 
-        if(insArrow != null)
-        {
-            return;
-        }
-
         if (arrowHandType == 1)
         {
             if (leftDown)
@@ -360,10 +355,13 @@ public class BowControl : UdonSharpBehaviour
                 {
                     if (arrowHandType == 1)
                     {
-                        arrowDrag = true;
-                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowLeftInstance");
-                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
-                        saveTime = 0.0f;
+                        if(insArrow == null)
+                        {
+                            arrowDrag = true;
+                            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowLeftInstance");
+                            beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
+                            saveTime = 0.0f;
+                        }
                     }
                 }
             }
@@ -387,10 +385,13 @@ public class BowControl : UdonSharpBehaviour
                 {
                     if (arrowHandType == 2)
                     {
-                        arrowDrag = true;
-                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowRightInstance");
-                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
-                        saveTime = 0.0f;
+                        if (insArrow == null)
+                        {
+                            arrowDrag = true;
+                            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowRightInstance");
+                            beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
+                            saveTime = 0.0f;
+                        }
                     }
                 }
             }
