@@ -41,32 +41,32 @@ public class BowControl : UdonSharpBehaviour
     private bool shotHaptic = false;
 
     private Vector3 localHandPos;
-    private int currentBowIndex = -1;
+    //private int currentBowIndex = -1;
     //VRCPlayerApi curlocalPlayer = null;
     VRCPlayerApi curTrackingPlayer = null;
-    float playTime = 0.0f;
+    //float playTime = 0.0f;
 
     bool isTrackingMode = false;
 
     void Start()
     {
-        currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
+        //currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
         //wireOriPoint = wirePointObj.transform.localPosition;
     }
 
     private void Update()
     {
-        playTime += Time.deltaTime;
-        lm.logStr = playTime.ToString();
+        //playTime += Time.deltaTime;
+        //lm.logStr = playTime.ToString();
 
         if(currentPickup.currentPlayer != null)
         {
-            lm.logStr += "\r\nhas player";
+            //lm.logStr += "\r\nhas player";
             curTrackingPlayer = currentPickup.currentPlayer;
         }
         else
         {
-            lm.logStr += "\r\nnull player";
+            //lm.logStr += "\r\nnull player";
             curTrackingPlayer = null;
         }
 
@@ -150,7 +150,7 @@ public class BowControl : UdonSharpBehaviour
                     //}
                     //else
                     //{
-                    //lm.logStr = pullingMessage;
+                    lm.logStr = pullingMessage;
                     //}
                     minimumPoint = true;
                 }
@@ -162,7 +162,7 @@ public class BowControl : UdonSharpBehaviour
                     //}
                     //else
                     //{
-                    //lm.logStr = pickupMessage;
+                    lm.logStr = pickupMessage;
                     //}
                     minimumPoint = false;
                 }
@@ -181,23 +181,23 @@ public class BowControl : UdonSharpBehaviour
         {
             if(arrowHandType == 1)
             {
-                lm.logStr += "\r\nleft drag";
+                //lm.logStr += "\r\nleft drag";
                 if (curTrackingPlayer != null)
                 {
-                    lm.logStr += "\r\nleft drag valid";
+                    //lm.logStr += "\r\nleft drag valid";
                     insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
                 }
-                lm.logStr += "\r\nleft drag valid end";
+                //lm.logStr += "\r\nleft drag valid end";
             }
             else if(arrowHandType == 2)
             {
-                lm.logStr += "\r\nright drag";
+                //lm.logStr += "\r\nright drag";
                 if (curTrackingPlayer != null)
                 {
-                    lm.logStr += "\r\nright drag valid";
+                    //lm.logStr += "\r\nright drag valid";
                     insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
                 }
-                lm.logStr += "\r\nright drag valid end";
+                //lm.logStr += "\r\nright drag valid end";
             }
         }
     }
@@ -242,7 +242,7 @@ public class BowControl : UdonSharpBehaviour
         //    curlocalPlayer = null;
         //}
 
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");// + currentBowIndex.ToString());
 
         settingStatus(false, 0);
     }
@@ -414,11 +414,11 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowLeftInstance()
     {
-        lm.logStr += "\r\nleft inst";
+        //lm.logStr += "\r\nleft inst";
         if (curTrackingPlayer != null)
         {
             Vector3 leftPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
-            lm.logStr += "\r\nleft inst end";
+            //lm.logStr += "\r\nleft inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
             insArrow.transform.position = leftPointPosition;
@@ -429,11 +429,11 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowRightInstance()
     {
-        lm.logStr += "\r\nright inst";
+        //lm.logStr += "\r\nright inst";
         if (curTrackingPlayer != null)
         {
             Vector3 rightPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
-            lm.logStr += "\r\nright inst end";
+            //lm.logStr += "\r\nright inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
             insArrow.transform.position = rightPointPosition;
@@ -449,125 +449,22 @@ public class BowControl : UdonSharpBehaviour
         wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
         Vector3 disVec2 = wirePointObj.transform.position;
 
-        lm.logStr += "\r\nfire arrow start";
+        //lm.logStr += "\r\nfire arrow start";
         if(insArrow != null)
         {
             insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
         }
-        lm.logStr += "\r\nfire arrow end";
+        //lm.logStr += "\r\nfire arrow end";
         insArrow = null;
     }
 
-    public void OnReleaseAction0()
-    {
-        if (currentBowIndex == 0)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction1()
-    {
-        if (currentBowIndex == 1)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction2()
-    {
-        if (currentBowIndex == 2)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction3()
-    {
-        if (currentBowIndex == 3)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction4()
-    {
-        if (currentBowIndex == 4)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction5()
-    {
-        if (currentBowIndex == 5)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction6()
-    {
-        if (currentBowIndex == 6)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction7()
-    {
-        if (currentBowIndex == 7)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction8()
-    {
-        if (currentBowIndex == 8)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction9()
-    {
-        if (currentBowIndex == 9)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction10()
-    {
-        if (currentBowIndex == 10)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction11()
-    {
-        if (currentBowIndex == 11)
-        {
-            bowReset();
-        }
-    }
-
-    public void OnReleaseAction12()
-    {
-        if (currentBowIndex == 12)
-        {
-            bowReset();
-        }
-    }
-    public void bowReset()
+    public void OnReleaseAction()
     {
         isTrackingMode = false;
         isPickupStatus = false;
         bowHandType = 0;
         arrowHandType = 0;
-    
+
         minimumPoint = false;
         arrowDrag = false;
         saveTime = 0.0f;
@@ -582,14 +479,149 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
-            lm.logStr = "destroy arrow";
+            //lm.logStr = "destroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
-        else
-        {
-            lm.logStr = "arrow null";
-        }
+        //else
+        //{
+        //    lm.logStr = "arrow null";
+        //}
     }
+
+    //public void OnReleaseAction0()
+    //{
+    //    if (currentBowIndex == 0)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction1()
+    //{
+    //    if (currentBowIndex == 1)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction2()
+    //{
+    //    if (currentBowIndex == 2)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction3()
+    //{
+    //    if (currentBowIndex == 3)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction4()
+    //{
+    //    if (currentBowIndex == 4)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction5()
+    //{
+    //    if (currentBowIndex == 5)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction6()
+    //{
+    //    if (currentBowIndex == 6)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction7()
+    //{
+    //    if (currentBowIndex == 7)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction8()
+    //{
+    //    if (currentBowIndex == 8)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction9()
+    //{
+    //    if (currentBowIndex == 9)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction10()
+    //{
+    //    if (currentBowIndex == 10)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction11()
+    //{
+    //    if (currentBowIndex == 11)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+
+    //public void OnReleaseAction12()
+    //{
+    //    if (currentBowIndex == 12)
+    //    {
+    //        bowReset();
+    //    }
+    //}
+    //public void bowReset()
+    //{
+    //    isTrackingMode = false;
+    //    isPickupStatus = false;
+    //    bowHandType = 0;
+    //    arrowHandType = 0;
+    
+    //    minimumPoint = false;
+    //    arrowDrag = false;
+    //    saveTime = 0.0f;
+
+    //    //leftDown = false;
+    //    //rightDown = false;
+    //    shotHaptic = false;
+
+    //    Vector3 disVec1 = wirePointObj.transform.position;
+    //    wirePointObj.transform.localPosition = wireBaseObj.transform.localPosition;
+    //    Vector3 disVec2 = wirePointObj.transform.position;
+
+    //    if (insArrow != null)
+    //    {
+    //        lm.logStr = "destroy arrow";
+    //        Destroy(insArrow);
+    //        //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+    //        insArrow = null;
+    //    }
+    //    else
+    //    {
+    //        lm.logStr = "arrow null";
+    //    }
+    //}
 }
