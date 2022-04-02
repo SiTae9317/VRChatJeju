@@ -378,6 +378,7 @@ public class BowControl : UdonSharpBehaviour
         Vector3 disVec2 = wirePointObj.transform.position;
 
         insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+        insArrow = null;
     }
 
     public void OnReleaseAction0()
