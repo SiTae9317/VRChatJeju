@@ -155,6 +155,14 @@ public class BowControl : UdonSharpBehaviour
         else
         {
             lm.logStr += "standby";
+            if(currentPickup.currentPlayer == null)
+            {
+                lm.logStr += "\r\ncp null";
+            }
+            else
+            {
+                lm.logStr += "\r\ncp has " + currentPickup.currentPlayer.IsValid().ToString();
+            }
         }
     }
 
@@ -219,7 +227,7 @@ public class BowControl : UdonSharpBehaviour
     public void OnPickupMessage()
     {
         //isPickupStatus = true;
-        lm.logStr = "pickup arrow"; 
+        lm.logStr += "\r\npickup arrow"; 
     }
 
     private void OnPickup()
@@ -518,14 +526,14 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
-            lm.logStr += "destroy arrow";
+            lm.logStr += "\r\ndestroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
         else
         {
-            lm.logStr += "arrow null";
+            lm.logStr += "\r\narrow null";
         }
     }
 }
