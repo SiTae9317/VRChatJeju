@@ -166,6 +166,11 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionLeftHand()
     {
+        if(currentPickup.currentPlayer == null)
+        {
+            return;
+        }
+
         lm.logStr += "\r\nleft drag";
         if (currentPickup.currentPlayer.IsValid())
         {
@@ -177,6 +182,11 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionRightHand()
     {
+        if (currentPickup.currentPlayer == null)
+        {
+            return;
+        }
+
         lm.logStr += "\r\nright drag";
         if (currentPickup.currentPlayer.IsValid())
         {
