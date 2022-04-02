@@ -416,6 +416,7 @@ public class BowControl : UdonSharpBehaviour
             insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
             insArrow.transform.position = leftPointPosition;
             isTrackingMode = true;
+            arrowHandType = 1; 
         }
     }
 
@@ -430,6 +431,7 @@ public class BowControl : UdonSharpBehaviour
             insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
             insArrow.transform.position = rightPointPosition;
             isTrackingMode = true;
+            arrowHandType = 2;
         }
     }
 
