@@ -61,10 +61,12 @@ public class BowControl : UdonSharpBehaviour
 
         if(currentPickup.currentPlayer != null)
         {
+            lm.logStr += "\r\nhas player";
             curTrackingPlayer = currentPickup.currentPlayer;
         }
         else
         {
+            lm.logStr += "\r\nnull player";
             curTrackingPlayer = null;
         }
 
@@ -405,9 +407,9 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowLeftInstance()
     {
+        lm.logStr += "\r\nleft inst";
         if (curTrackingPlayer != null)
         {
-            lm.logStr += "\r\nleft inst";
             Vector3 leftPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
             lm.logStr += "\r\nleft inst end";
             insArrow = VRCInstantiate(arrowPrefab);
@@ -419,9 +421,9 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowRightInstance()
     {
+        lm.logStr += "\r\nright inst";
         if (curTrackingPlayer != null)
         {
-            lm.logStr += "\r\nright inst";
             Vector3 rightPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
             lm.logStr += "\r\nright inst end";
             insArrow = VRCInstantiate(arrowPrefab);
@@ -439,7 +441,10 @@ public class BowControl : UdonSharpBehaviour
         Vector3 disVec2 = wirePointObj.transform.position;
 
         lm.logStr += "\r\nfire arrow start";
-        insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+        if(insArrow != null)
+        {
+            insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
+        }
         lm.logStr += "\r\nfire arrow end";
         insArrow = null;
     }
