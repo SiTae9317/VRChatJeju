@@ -53,17 +53,17 @@ public class BowControl : UdonSharpBehaviour
 
     private void Update()
     {
-        playTime += Time.deltaTime;
-        lm.logStr = playTime.ToString();
+        //playTime += Time.deltaTime;
+        //lm.logStr = playTime.ToString();
 
-        if (currentPickup.currentPlayer == null)
-        {
-            lm.logStr += "\r\ncp null";
-        }
-        else
-        {
-            lm.logStr += "\r\ncp has " + currentPickup.currentPlayer.IsValid().ToString();
-        }
+        //if (currentPickup.currentPlayer == null)
+        //{
+        //    lm.logStr += "\r\ncp null";
+        //}
+        //else
+        //{
+        //    lm.logStr += "\r\ncp has " + currentPickup.currentPlayer.IsValid().ToString();
+        //}
 
         if (isPickupStatus)
         {
@@ -171,13 +171,13 @@ public class BowControl : UdonSharpBehaviour
             return;
         }
 
-        lm.logStr += "\r\nleft drag";
+        //lm.logStr += "\r\nleft drag";
         if (currentPickup.currentPlayer.IsValid())
         {
-            lm.logStr += "\r\nleft drag valid";
+            //lm.logStr += "\r\nleft drag valid";
             insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
         }
-        lm.logStr += "\r\nleft drag valid end";
+        //lm.logStr += "\r\nleft drag valid end";
     }
 
     public void OnWirePositionRightHand()
@@ -187,13 +187,13 @@ public class BowControl : UdonSharpBehaviour
             return;
         }
 
-        lm.logStr += "\r\nright drag";
+        //lm.logStr += "\r\nright drag";
         if (currentPickup.currentPlayer.IsValid())
         {
-            lm.logStr += "\r\nright drag valid";
+            //lm.logStr += "\r\nright drag valid";
             insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
         }
-        lm.logStr += "\r\nright drag valid end";
+        //lm.logStr += "\r\nright drag valid end";
     }
 
     //public void OnWirePositionRelease()
@@ -323,7 +323,10 @@ public class BowControl : UdonSharpBehaviour
         //    }
         //}
 
-        if(isPickupStatus)
+        lm.logStr = "left down " + leftDown.ToString() +"\r\n";
+        lm.logStr = "right down " + rightDown.ToString() + "\r\n";
+
+        if (isPickupStatus)
         {
             if (args.handType == VRC.Udon.Common.HandType.LEFT)
             {
@@ -390,9 +393,9 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
         {
-            lm.logStr += "\r\nleft inst";
+            //lm.logStr += "\r\nleft inst";
             Vector3 leftPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
-            lm.logStr += "\r\nleft inst end";
+            //lm.logStr += "\r\nleft inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
             insArrow.transform.position = leftPointPosition;
@@ -403,9 +406,9 @@ public class BowControl : UdonSharpBehaviour
     {
         if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
         {
-            lm.logStr += "\r\nright inst";
+            //lm.logStr += "\r\nright inst";
             Vector3 rightPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
-            lm.logStr += "\r\nright inst end";
+            //lm.logStr += "\r\nright inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
             insArrow.transform.position = rightPointPosition;
@@ -545,14 +548,14 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
-            lm.logStr = "destroy arrow";
+            //lm.logStr = "destroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
         else
         {
-            lm.logStr = "arrow null";
+            //lm.logStr = "arrow null";
         }
     }
 }
