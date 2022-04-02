@@ -326,7 +326,14 @@ public class BowControl : UdonSharpBehaviour
         if (args.handType == VRC.Udon.Common.HandType.LEFT)
         {
             leftDown = !leftDown;
+        }
+        else if (args.handType == VRC.Udon.Common.HandType.RIGHT)
+        {
+            rightDown = !rightDown;
+        }
 
+        if (arrowHandType == 1)
+        {
             if (leftDown)
             {
                 if (minimumPoint)
@@ -352,10 +359,8 @@ public class BowControl : UdonSharpBehaviour
                 }
             }
         }
-        else if (args.handType == VRC.Udon.Common.HandType.RIGHT)
+        else if (arrowHandType == 2)
         {
-            rightDown = !rightDown;
-
             if (rightDown)
             {
                 if (minimumPoint)
@@ -535,8 +540,8 @@ public class BowControl : UdonSharpBehaviour
         arrowDrag = false;
         saveTime = 0.0f;
 
-        leftDown = false;
-        rightDown = false;
+        //leftDown = false;
+        //rightDown = false;
         shotHaptic = false;
 
         Vector3 disVec1 = wirePointObj.transform.position;
