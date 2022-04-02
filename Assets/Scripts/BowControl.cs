@@ -323,64 +323,61 @@ public class BowControl : UdonSharpBehaviour
         //    }
         //}
 
-        if (isPickupStatus)
+        if (args.handType == VRC.Udon.Common.HandType.LEFT)
         {
-            if (args.handType == VRC.Udon.Common.HandType.LEFT)
-            {
-                leftDown = !leftDown;
+            leftDown = !leftDown;
 
-                if (leftDown)
+            if (leftDown)
+            {
+                if (minimumPoint)
                 {
-                    if (minimumPoint)
+                    if (arrowHandType == 1)
                     {
-                        if (arrowHandType == 1)
-                        {
-                            arrowDrag = true;
-                            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowLeftInstance");
-                            beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
-                            saveTime = 0.0f;
-                        }
-                    }
-                }
-                else
-                {
-                    if (arrowDrag)
-                    {
-                        arrowDrag = false;
+                        arrowDrag = true;
+                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowLeftInstance");
+                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
                         saveTime = 0.0f;
-                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
-                        //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
-                        shotHaptic = true;
                     }
                 }
             }
-            else if (args.handType == VRC.Udon.Common.HandType.RIGHT)
+            else
             {
-                rightDown = !rightDown;
-
-                if (rightDown)
+                if (arrowDrag)
                 {
-                    if (minimumPoint)
+                    arrowDrag = false;
+                    saveTime = 0.0f;
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                    //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
+                    shotHaptic = true;
+                }
+            }
+        }
+        else if (args.handType == VRC.Udon.Common.HandType.RIGHT)
+        {
+            rightDown = !rightDown;
+
+            if (rightDown)
+            {
+                if (minimumPoint)
+                {
+                    if (arrowHandType == 2)
                     {
-                        if (arrowHandType == 2)
-                        {
-                            arrowDrag = true;
-                            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowRightInstance");
-                            beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
-                            saveTime = 0.0f;
-                        }
+                        arrowDrag = true;
+                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowRightInstance");
+                        beforePosition = wireBaseObj.transform.position - getHumanBoneIndex();
+                        saveTime = 0.0f;
                     }
                 }
-                else
+            }
+            else
+            {
+                if (arrowDrag)
                 {
-                    if (arrowDrag)
-                    {
-                        arrowDrag = false;
-                        saveTime = 0.0f;
-                        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
-                        //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
-                        shotHaptic = true;
-                    }
+                    arrowDrag = false;
+                    saveTime = 0.0f;
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnArrowFire");
+                    //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnWirePositionRelease");
+                    shotHaptic = true;
                 }
             }
         }
