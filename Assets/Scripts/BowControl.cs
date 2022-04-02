@@ -211,6 +211,7 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
+        lm.logStr = "pickup arrow";
         curlocalPlayer = currentPickup.currentPlayer;
         curlocalPlayer.EnablePickups(false);
 
