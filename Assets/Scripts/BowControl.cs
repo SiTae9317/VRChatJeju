@@ -149,6 +149,10 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
+        else
+        {
+            lm.logStr = "standby";
+        }
     }
 
     public void OnWirePositionLeftHand()
