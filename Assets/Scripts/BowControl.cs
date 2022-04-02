@@ -43,7 +43,6 @@ public class BowControl : UdonSharpBehaviour
     private Vector3 localHandPos;
     private int currentBowIndex = -1;
     VRCPlayerApi curlocalPlayer;
-    float playTime = 0.0f;
 
     void Start()
     {
@@ -53,8 +52,6 @@ public class BowControl : UdonSharpBehaviour
 
     private void Update()
     {
-        playTime += Time.deltaTime;
-        lm.logStr = playTime.ToString();
         if (isPickupStatus)
         {
             Vector3 handPos = getHumanBoneIndex();
@@ -152,18 +149,6 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
-        else
-        {
-            lm.logStr += "standby";
-            if(currentPickup.currentPlayer == null)
-            {
-                lm.logStr += "\r\ncp null";
-            }
-            else
-            {
-                lm.logStr += "\r\ncp has " + currentPickup.currentPlayer.IsValid().ToString();
-            }
-        }
     }
 
     public void OnWirePositionLeftHand()
@@ -224,15 +209,8 @@ public class BowControl : UdonSharpBehaviour
         ;
     }
 
-    public void OnPickupMessage()
-    {
-        //isPickupStatus = true;
-        lm.logStr += "\r\npickup arrow"; 
-    }
-
     private void OnPickup()
     {
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnPickupMessage");
         curlocalPlayer = currentPickup.currentPlayer;
         curlocalPlayer.EnablePickups(false);
 
@@ -526,14 +504,14 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
-            lm.logStr += "\r\ndestroy arrow";
+            lm.logStr = "destroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
         else
         {
-            lm.logStr += "\r\narrow null";
+            lm.logStr = "arrow null";
         }
     }
 }
