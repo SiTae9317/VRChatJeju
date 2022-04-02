@@ -209,9 +209,14 @@ public class BowControl : UdonSharpBehaviour
         ;
     }
 
-    private void OnPickup()
+    public void OnPickupMessage()
     {
         lm.logStr = "pickup arrow";
+    }
+
+    private void OnPickup()
+    {
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnPickupMessage");
         curlocalPlayer = currentPickup.currentPlayer;
         curlocalPlayer.EnablePickups(false);
 
