@@ -388,20 +388,28 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowLeftInstance()
     {
-        insArrow = VRCInstantiate(arrowPrefab);
-        insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
-        lm.logStr += "\r\nleft inst";
-        insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
-        lm.logStr += "\r\nleft inst end";
+        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        {
+            lm.logStr += "\r\nleft inst";
+            Vector3 leftPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+            lm.logStr += "\r\nleft inst end";
+            insArrow = VRCInstantiate(arrowPrefab);
+            insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
+            insArrow.transform.position = leftPointPosition;
+        }
     }
 
     public void OnArrowRightInstance()
     {
-        insArrow = VRCInstantiate(arrowPrefab);
-        insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
-        lm.logStr += "\r\nright inst";
-        insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
-        lm.logStr += "\r\nright inst end";
+        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        {
+            lm.logStr += "\r\nright inst";
+            Vector3 rightPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+            lm.logStr += "\r\nright inst end";
+            insArrow = VRCInstantiate(arrowPrefab);
+            insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
+            insArrow.transform.position = rightPointPosition;
+        }
     }
 
     public void OnArrowFire()
