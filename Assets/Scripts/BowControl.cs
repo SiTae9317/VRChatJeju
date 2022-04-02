@@ -264,6 +264,7 @@ public class BowControl : UdonSharpBehaviour
     {
         Vector3 handPos = Vector3.zero;
 
+
         if (arrowHandType == 1)
         {
             handPos = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
@@ -344,6 +345,11 @@ public class BowControl : UdonSharpBehaviour
         else if (args.handType == VRC.Udon.Common.HandType.RIGHT)
         {
             rightDown = !rightDown;
+        }
+
+        if(insArrow != null)
+        {
+            return;
         }
 
         if (arrowHandType == 1)
