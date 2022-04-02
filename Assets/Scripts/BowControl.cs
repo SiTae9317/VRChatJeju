@@ -279,7 +279,7 @@ public class BowControl : UdonSharpBehaviour
         //    curlocalPlayer = null;
         //}
 
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetSetting");// + currentBowIndex.ToString());
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");// + currentBowIndex.ToString());
 
         settingStatus(false, 0);
     }
@@ -295,7 +295,7 @@ public class BowControl : UdonSharpBehaviour
         //curlocalPlayer.EnablePickups(false);
 
         settingStatus(true, (int)currentPickup.currentHand);
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetSetting");
     }
 
     Vector3 getHumanBoneIndex()
