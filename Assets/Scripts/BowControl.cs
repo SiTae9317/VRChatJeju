@@ -43,6 +43,7 @@ public class BowControl : UdonSharpBehaviour
     private Vector3 localHandPos;
     private int currentBowIndex = -1;
     VRCPlayerApi curlocalPlayer;
+    float playTime = 0.0f;
 
     void Start()
     {
@@ -52,6 +53,18 @@ public class BowControl : UdonSharpBehaviour
 
     private void Update()
     {
+        playTime += Time.deltaTime;
+        lm.logStr = playTime.ToString();
+
+        if (currentPickup.currentPlayer == null)
+        {
+            lm.logStr += "\r\ncp null";
+        }
+        else
+        {
+            lm.logStr += "\r\ncp has " + currentPickup.currentPlayer.IsValid().ToString();
+        }
+
         if (isPickupStatus)
         {
             Vector3 handPos = getHumanBoneIndex();
