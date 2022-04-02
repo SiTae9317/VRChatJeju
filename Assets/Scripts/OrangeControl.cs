@@ -18,6 +18,7 @@ public class OrangeControl : UdonSharpBehaviour
 
     public void OnGravityUse()
     {
-        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        Destroy(GetComponent<Rigidbody>());
+        //gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
 }
