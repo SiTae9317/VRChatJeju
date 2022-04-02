@@ -324,7 +324,7 @@ public class BowControl : UdonSharpBehaviour
         //}
 
         lm.logStr = "left down " + leftDown.ToString() +"\r\n";
-        lm.logStr = "right down " + rightDown.ToString() + "\r\n";
+        lm.logStr += "right down " + rightDown.ToString();
 
         if (isPickupStatus)
         {
