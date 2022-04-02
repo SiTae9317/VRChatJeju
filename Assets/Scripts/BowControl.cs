@@ -166,13 +166,8 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionLeftHand()
     {
-        if(currentPickup.currentPlayer == null)
-        {
-            return;
-        }
-
         lm.logStr += "\r\nleft drag";
-        if (currentPickup.currentPlayer.IsValid())
+        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
         {
             lm.logStr += "\r\nleft drag valid";
             insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
@@ -182,13 +177,8 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnWirePositionRightHand()
     {
-        if (currentPickup.currentPlayer == null)
-        {
-            return;
-        }
-
         lm.logStr += "\r\nright drag";
-        if (currentPickup.currentPlayer.IsValid())
+        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
         {
             lm.logStr += "\r\nright drag valid";
             insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
