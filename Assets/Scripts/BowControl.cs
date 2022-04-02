@@ -42,7 +42,8 @@ public class BowControl : UdonSharpBehaviour
 
     private Vector3 localHandPos;
     private int currentBowIndex = -1;
-    VRCPlayerApi curlocalPlayer;
+    VRCPlayerApi curlocalPlayer = null;
+    VRCPlayerApi curTrackingPlayer = null;
     float playTime = 0.0f;
 
     void Start()
@@ -55,6 +56,15 @@ public class BowControl : UdonSharpBehaviour
     {
         playTime += Time.deltaTime;
         lm.logStr = playTime.ToString();
+
+        if(currentPickup.currentPlayer != null)
+        {
+            curTrackingPlayer = currentPickup.currentPlayer;
+        }
+        else
+        {
+            curTrackingPlayer = null;
+        }
 
         //if (currentPickup.currentPlayer == null)
         //{
@@ -167,10 +177,10 @@ public class BowControl : UdonSharpBehaviour
     public void OnWirePositionLeftHand()
     {
         lm.logStr += "\r\nleft drag";
-        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        if (curTrackingPlayer != null)
         {
             lm.logStr += "\r\nleft drag valid";
-            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+            insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
         }
         lm.logStr += "\r\nleft drag valid end";
     }
@@ -178,10 +188,10 @@ public class BowControl : UdonSharpBehaviour
     public void OnWirePositionRightHand()
     {
         lm.logStr += "\r\nright drag";
-        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        if (curTrackingPlayer != null)
         {
             lm.logStr += "\r\nright drag valid";
-            insArrow.transform.position = wirePointObj.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+            insArrow.transform.position = wirePointObj.transform.position = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
         }
         lm.logStr += "\r\nright drag valid end";
     }
@@ -383,10 +393,10 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowLeftInstance()
     {
-        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        if (curTrackingPlayer != null)
         {
             lm.logStr += "\r\nleft inst";
-            Vector3 leftPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+            Vector3 leftPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
             lm.logStr += "\r\nleft inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
@@ -396,10 +406,10 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnArrowRightInstance()
     {
-        if (currentPickup.currentPlayer != null && currentPickup.currentPlayer.IsValid())
+        if (curTrackingPlayer != null)
         {
             lm.logStr += "\r\nright inst";
-            Vector3 rightPointPosition = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+            Vector3 rightPointPosition = curTrackingPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
             lm.logStr += "\r\nright inst end";
             insArrow = VRCInstantiate(arrowPrefab);
             insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
