@@ -43,6 +43,7 @@ public class BowControl : UdonSharpBehaviour
     private Vector3 localHandPos;
     private int currentBowIndex = -1;
     VRCPlayerApi curlocalPlayer;
+    float playTime = 0.0f;
 
     void Start()
     {
@@ -52,6 +53,8 @@ public class BowControl : UdonSharpBehaviour
 
     private void Update()
     {
+        playTime += Time.deltaTime;
+        lm.logStr = playTime.ToString();
         if (isPickupStatus)
         {
             Vector3 handPos = getHumanBoneIndex();
@@ -151,7 +154,7 @@ public class BowControl : UdonSharpBehaviour
         }
         else
         {
-            lm.logStr = "standby";
+            lm.logStr += "standby";
         }
     }
 
@@ -216,7 +219,7 @@ public class BowControl : UdonSharpBehaviour
     public void OnPickupMessage()
     {
         isPickupStatus = true;
-        lm.logStr = "pickup arrow";
+        lm.logStr = "pickup arrow"; 
     }
 
     private void OnPickup()
@@ -515,14 +518,14 @@ public class BowControl : UdonSharpBehaviour
 
         if (insArrow != null)
         {
-            lm.logStr = "destroy arrow";
+            lm.logStr += "destroy arrow";
             Destroy(insArrow);
             //insArrow.GetComponent<ArrowControl>().fireArrow(Vector3.Distance(disVec1, disVec2) * bowPow);
             insArrow = null;
         }
         else
         {
-            lm.logStr = "arrow null";
+            lm.logStr += "arrow null";
         }
     }
 }
