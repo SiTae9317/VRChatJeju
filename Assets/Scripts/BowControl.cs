@@ -215,6 +215,7 @@ public class BowControl : UdonSharpBehaviour
 
     public void OnPickupMessage()
     {
+        isPickupStatus = true;
         lm.logStr = "pickup arrow";
     }
 
