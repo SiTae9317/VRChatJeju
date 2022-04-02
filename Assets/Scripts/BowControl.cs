@@ -323,9 +323,6 @@ public class BowControl : UdonSharpBehaviour
         //    }
         //}
 
-        lm.logStr = "left down " + leftDown.ToString() +"\r\n";
-        lm.logStr += "right down " + rightDown.ToString();
-
         if (isPickupStatus)
         {
             if (args.handType == VRC.Udon.Common.HandType.LEFT)
@@ -387,6 +384,9 @@ public class BowControl : UdonSharpBehaviour
                 }
             }
         }
+
+        lm.logStr = "left down " + leftDown.ToString() + "\r\n";
+        lm.logStr += "right down " + rightDown.ToString();
     }
 
     public void OnArrowLeftInstance()
