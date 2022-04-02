@@ -18,6 +18,7 @@ public class BowControl : UdonSharpBehaviour
     public Transform rightPoint;
 
     public float bowPow = 30.0f;
+    public float resetTime = 10.0f;
 
     public string pickupMessage = "";
     public string pullingMessage = "";
@@ -34,16 +35,21 @@ public class BowControl : UdonSharpBehaviour
     private bool minimumPoint = false;
     private bool arrowDrag = false;
     private float saveTime = 0.0f;
+    private float resetSaveTime = 0.0f;
 
     private bool leftDown = false;
     private bool rightDown = false;
 
     private bool shotHaptic = false;
+    private bool setReset = false;
+
+    private Vector3 resetPosition;
+    private Quaternion resetRotation;
 
     private Vector3 localHandPos;
     //private int currentBowIndex = -1;
-    //VRCPlayerApi curlocalPlayer = null;
-    VRCPlayerApi curTrackingPlayer = null;
+    //private VRCPlayerApi curlocalPlayer = null;
+    private VRCPlayerApi curTrackingPlayer = null;
     //float playTime = 0.0f;
 
     bool isTrackingMode = false;
@@ -52,6 +58,8 @@ public class BowControl : UdonSharpBehaviour
     {
         //currentBowIndex = int.Parse(gameObject.name.Split(' ')[1]);
         //wireOriPoint = wirePointObj.transform.localPosition;
+        resetPosition = gameObject.transform.position;
+        resetRotation = gameObject.transform.rotation;
     }
 
     private void Update()
@@ -176,6 +184,18 @@ public class BowControl : UdonSharpBehaviour
                 Networking.LocalPlayer.PlayHapticEventInHand(VRC_Pickup.PickupHand.Right, 0.1f, 2.00f, 2.00f);
             }
         }
+        else
+        {
+            if(setReset)
+            {
+                resetSaveTime += Time.deltaTime;
+                if(resetSaveTime > resetTime)
+                {
+                    resetSaveTime = 0.0f;
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetTransform");
+                }
+            }
+        }
 
         if(isTrackingMode)
         {
@@ -199,6 +219,23 @@ public class BowControl : UdonSharpBehaviour
                 }
                 //lm.logStr += "\r\nright drag valid end";
             }
+        }
+    }
+
+    public void OnResetSetting()
+    {
+        resetSaveTime = 0.0f;
+        setReset = isPickupStatus;
+    }
+
+    public void OnResetTransform()
+    {
+        if(setReset)
+        {
+            setReset = false;
+
+            gameObject.transform.position = resetPosition;
+            gameObject.transform.rotation = resetRotation;
         }
     }
 
@@ -242,7 +279,7 @@ public class BowControl : UdonSharpBehaviour
         //    curlocalPlayer = null;
         //}
 
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");// + currentBowIndex.ToString());
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnResetSetting");// + currentBowIndex.ToString());
 
         settingStatus(false, 0);
     }
@@ -258,6 +295,7 @@ public class BowControl : UdonSharpBehaviour
         //curlocalPlayer.EnablePickups(false);
 
         settingStatus(true, (int)currentPickup.currentHand);
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction");
     }
 
     Vector3 getHumanBoneIndex()
