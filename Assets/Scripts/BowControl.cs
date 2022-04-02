@@ -42,7 +42,7 @@ public class BowControl : UdonSharpBehaviour
 
     private Vector3 localHandPos;
     private int currentBowIndex = -1;
-    VRCPlayerApi curlocalPlayer = null;
+    //VRCPlayerApi curlocalPlayer = null;
     VRCPlayerApi curTrackingPlayer = null;
     float playTime = 0.0f;
 
@@ -236,11 +236,11 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnDrop()
     {
-        if (curlocalPlayer != null)
-        {
-            curlocalPlayer.EnablePickups(true);
-            curlocalPlayer = null;
-        }
+        //if (curlocalPlayer != null)
+        //{
+        //    curlocalPlayer.EnablePickups(true);
+        //    curlocalPlayer = null;
+        //}
 
         SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnReleaseAction" + currentBowIndex.ToString());
 
@@ -254,8 +254,8 @@ public class BowControl : UdonSharpBehaviour
 
     private void OnPickup()
     {
-        curlocalPlayer = currentPickup.currentPlayer;
-        curlocalPlayer.EnablePickups(false);
+        //curlocalPlayer = currentPickup.currentPlayer;
+        //curlocalPlayer.EnablePickups(false);
 
         settingStatus(true, (int)currentPickup.currentHand);
     }
