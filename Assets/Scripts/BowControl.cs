@@ -390,14 +390,18 @@ public class BowControl : UdonSharpBehaviour
     {
         insArrow = VRCInstantiate(arrowPrefab);
         insArrow.GetComponent<ArrowControl>().lookatObj = leftPoint;//currentPickup.ExactGun;
+        lm.logStr += "\r\nleft inst";
         insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.LeftIndexProximal);
+        lm.logStr += "\r\nleft inst end";
     }
 
     public void OnArrowRightInstance()
     {
         insArrow = VRCInstantiate(arrowPrefab);
         insArrow.GetComponent<ArrowControl>().lookatObj = rightPoint;// currentPickup.ExactGun;
+        lm.logStr += "\r\nright inst";
         insArrow.transform.position = currentPickup.currentPlayer.GetBonePosition(HumanBodyBones.RightIndexProximal);
+        lm.logStr += "\r\nright inst end";
     }
 
     public void OnArrowFire()
