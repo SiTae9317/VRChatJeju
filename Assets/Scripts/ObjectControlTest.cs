@@ -6,20 +6,37 @@ using VRC.Udon;
 
 public class ObjectControlTest : UdonSharpBehaviour
 {
-    public OrangeControl oc;
+    MeshRenderer mr;
+    private bool isTrigger;
+    public Material onMat;
+    public Material offMat;
 
     void Start()
     {
+        mr = gameObject.GetComponent<MeshRenderer>();
+        materialAction(isTrigger);
     }
 
     public void Interact()
     {
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnUnlock");
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "MyButtonClickEvent");
     }
 
-    public void OnUnlock()
+    public void MyButtonClickEvent()
     {
-        oc.OnUnlock();
-        Destroy(gameObject);
+        isTrigger = !isTrigger;
+        materialAction(isTrigger);
+    }
+
+    void materialAction(bool curStatus)
+    {
+        if (curStatus)
+        {
+            mr.sharedMaterial = onMat;
+        }
+        else
+        {
+            mr.sharedMaterial = offMat;
+        }
     }
 }
