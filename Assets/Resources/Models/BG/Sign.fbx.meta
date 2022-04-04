@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 7b08947604944b346aa401553bba36f7
+guid: 4f4c8d50b5a3b1c459f9214f661f573c
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Sign
+    second: {fileID: 2100000, guid: b40e39700fd371e4993004d39a374c31, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
